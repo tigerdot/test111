@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>반사회성 성향 자가 선별 검사</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#667085;--bd:#d9dde5;--ac:#3b5bdb;--acs:#e7ecff;--ok:#2b8a3e;--warn:#e8590c;--bad:#c92a2a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--card:#1e232c;--tx:#e8ebf1;--mut:#9aa3b2;--bd:#323a47;--ac:#7c93ff;--acs:#262e4d;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}}
+:root[data-theme="dark"]{--bg:#14171d;--card:#1e232c;--tx:#e8ebf1;--mut:#9aa3b2;--bd:#323a47;--ac:#7c93ff;--acs:#262e4d;--ok:#69db7c;--warn:#ffa94d;--bad:#ff8787}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.55}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:8px 0}
+.note{font-size:.85rem;color:var(--mut);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px}
+.prog{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:10px 0;z-index:5}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .25s}
+.pt{display:flex;justify-content:space-between;font-size:.85rem;color:var(--mut);margin-top:4px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:12px 0}
+.card h2{font-size:1rem;margin:0 0 4px}
+.card p{margin:0 0 10px;font-size:.88rem;color:var(--mut)}
+.sec{font-size:1.05rem;margin:22px 0 4px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale button,.yn button{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:10px 2px;cursor:pointer;min-height:44px}
+.scale button b{display:block;font-size:1.05rem}
+.scale button span{display:block;font-size:.68rem;color:var(--mut)}
+.scale button.on,.yn button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.scale button.on span{color:#fff}
+.yn{display:flex;gap:8px}.yn button{flex:1}
+input[type=number]{font:inherit;width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+.res{border-width:2px}
+.score{font-size:2rem;font-weight:700}
+.lvl{font-weight:700;font-size:1.1rem}
+.rb{display:flex;gap:8px;margin-top:8px}
+.rb button{font:inherit;padding:12px 16px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);cursor:pointer}
+.rb button.reset{background:var(--bad);border-color:var(--bad);color:#fff}
+ul{padding-left:18px;margin:6px 0}
+li{font-size:.9rem;margin:3px 0}
+.small{font-size:.8rem;color:var(--mut)}
+input[type=text]{font:inherit;width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx)}
+button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+@media (max-width:400px){.wrap{padding:12px}.scale{gap:4px}.scale button span{font-size:.6rem;letter-spacing:-.03em}}
+.band{border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:.88rem}
+.band.cur{border-width:2px;background:var(--acs)}
+.band b{display:block;margin-bottom:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>반사회성 성향 자가 선별 검사</h1>
+<div class="note">DSM-5 반사회성 성격장애(ASPD) 진단 기준 A의 7개 영역(영역당 2문항, 총 14문항)을 바탕으로 만든 자가 선별 도구입니다. 임상 진단 도구(PCL-R 등)는 전문가만 시행할 수 있어 그대로 옮길 수 없으며, 이 검사는 진단이 아니라 참고용입니다. “소시오패스”는 공식 진단명이 아니고, 의학적으로는 반사회성 성격장애에 가깝게 다뤄집니다.</div>
+
+<div class="prog">
+<div class="bar"><i id="barfill"></i></div>
+<div class="pt"><span id="ptxt">0 / 13 응답</span><span id="pct">0%</span></div>
+</div>
+
+<h2 class="sec">1부. 기본 정보와 과거 행동 이력</h2>
+<div class="card"><h2>이름</h2><p>결과에 표시됩니다. 비워 두어도 됩니다.</p><input type="text" id="nm" maxlength="20" placeholder="예: 수지 메롱"></div>
+<div class="card"><h2>나이</h2><p>만 나이를 입력하세요.</p><input type="number" id="age" min="1" max="120" inputmode="numeric" placeholder="예: 28"></div>
+<div id="hist"></div>
+
+<h2 class="sec">2부. 행동 문항 (각 0~4점)</h2>
+<p class="small">평소의 나와 얼마나 가까운지 고르세요. 0 = 전혀 아니다 · 4 = 매우 그렇다. 일부 문항은 점수가 반대로 계산됩니다(역채점).</p>
+<div id="items"></div>
+
+<div class="card res" id="result" hidden>
+<div class="small" id="who"></div>
+<div class="small">2부 행동 문항 총점</div>
+<div><span class="score" id="total">0</span><span class="small"> / 56</span></div>
+<div class="lvl" id="lvl"></div>
+<p id="desc"></p>
+<ul id="extra"></ul>
+<h2 style="font-size:1rem;margin:14px 0 4px">점수 범위별 설명</h2>
+<div id="bands"></div>
+<p class="small">이 결과는 진단이 아닙니다. 실제 진단은 정신건강의학과 전문의의 면담과 병력 확인이 필요합니다. 일상에 어려움이 있거나 걱정되는 점이 있다면 전문가와 상담해 보세요.</p>
+</div>
+
+<div class="rb"><button class="reset" id="reset" type="button">초기화</button></div>
+<p class="small">입력한 내용은 이 기기 밖으로 전송되거나 저장되지 않습니다.</p>
+</div>
+
+<script>
+var LABELS=["전혀 아니다","아니다","보통","그렇다","매우 그렇다"];
+var ITEMS=[
+{c:0,t:"규칙이 현실과 맞지 않는다고 느끼면, 걸리지만 않는다면 어기는 쪽이 합리적이라고 생각한다."},
+{c:6,t:"내 행동 때문에 누군가 상처받았다는 말을 들어도 마음이 오래 불편하지 않다."},
+{c:2,r:1,t:"중요한 일을 앞두면 몇 주 전부터 일정과 대안을 정리해 둔다."},
+{c:4,t:"주변에서 위험하다고 말릴수록 오히려 그 일을 해 보고 싶어진다."},
+{c:1,t:"상황을 내게 유리하게 만들 수 있다면, 사실을 조금 다듬어 말하는 것도 대화의 기술이라고 본다."},
+{c:5,t:"약속 시간, 마감, 갚기로 한 돈은 사정이 생기면 미뤄도 큰 문제는 아니라고 생각한다."},
+{c:3,t:"누군가 내 영역을 침범하면 말보다 몸이 먼저 반응한 적이 있다."},
+{c:0,r:1,t:"차가 한 대도 없는 한밤중에도 보행 신호가 바뀔 때까지 기다리는 편이다."},
+{c:6,t:"남에게 피해를 준 일을 돌아보면, 상대에게도 그럴 만한 이유가 있었다고 느낀다."},
+{c:2,t:"이직, 이사, 큰 지출 같은 결정도 마음이 동한 날 바로 실행하는 경우가 많다."},
+{c:1,t:"처음 만난 사람에게 이름이나 직업을 그때그때 다르게 소개해 본 적이 있다."},
+{c:4,t:"음주 후 운전이나 안전장치 없는 활동을 ‘괜찮을 거야’ 하고 넘긴 적이 있다."},
+{c:3,t:"갈등이 생기면 상대가 움츠러들 만큼 분위기를 압도하는 편이 일이 빨리 끝난다고 느낀다."},
+{c:5,r:1,t:"한번 맡은 일은 하기 싫어져도 끝까지 마무리하는 편이다."}
+];
+var HIST=[
+"15세 이전에 자주 싸움을 걸거나 약한 아이를 괴롭힌 적이 있다.",
+"15세 이전에 사람이나 동물에게 잔인한 행동을 한 적이 있다.",
+"15세 이전에 남의 물건을 일부러 부수거나 불을 지른 적이 있다.",
+"15세 이전에 거짓말, 절도, 사기를 반복한 적이 있다.",
+"15세 이전에 무단결석, 가출 등 심각한 규칙 위반을 반복한 적이 있다."
+];
+var BANDS=[
+{lo:0,hi:19,n:"낮음 (0~19점)",d:"일반 인구 대부분이 속하는 범위입니다. 반사회성 성격장애(ASPD)의 진단 기준에 해당할 가능성은 낮습니다. 누구나 규칙을 어기거나 충동적으로 행동하는 순간은 있으며, 그것만으로는 임상적 의미가 크지 않습니다."},
+{lo:20,hi:31,n:"경미함 (20~31점)",d:"충동성, 규칙에 대한 냉소 등 일부 특성이 보이는 범위입니다. 청소년기, 스트레스, 주의력결핍 과잉행동장애(ADHD), 물질 사용, 기분장애 등에서도 흔히 나타나므로 이 점수만으로 반사회성을 의심하지는 않습니다."},
+{lo:32,hi:43,n:"중등도 (32~43점)",d:"여러 영역에서 반사회적 행동 양식이 뚜렷한 범위입니다. DSM-5 진단 기준(7개 행동 영역 중 3개 이상이 만 15세 이후 지속, 만 18세 이상, 만 15세 이전 품행장애 증거)을 충족하는지는 전문의의 면담과 병력 확인으로만 판단할 수 있으므로, 상담을 권합니다."},
+{lo:44,hi:56,n:"높음 (44~56점)",d:"대부분의 영역에서 일관된 경향이 나타나는 범위로, ASPD 진단 기준과 겹치는 부분이 많습니다. 정신건강의학과 평가를 권합니다. 다만 자가보고는 실제보다 낮게 또는 높게 답할 수 있어 한계가 있고, 임상에서는 면담, 과거 기록, 타인의 보고, 전문가용 도구(PCL-R 등)를 함께 사용합니다."}
+];
+var ans=[],hans=[],N=ITEMS.length+1+HIST.length;
+var itemsEl=document.getElementById("items"),histEl=document.getElementById("hist");
+
+function build(){
+ itemsEl.innerHTML="";histEl.innerHTML="";
+ HIST.forEach(function(t,i){
+  var c=document.createElement("div");c.className="card";
+  c.innerHTML="<p style='color:inherit;font-size:.95rem'>"+(i+1)+". "+t+"</p>";
+  var y=document.createElement("div");y.className="yn";
+  [["예",1],["아니오",0]].forEach(function(o){
+   var b=document.createElement("button");b.type="button";b.textContent=o[0];
+   b.onclick=function(){hans[i]=o[1];paint();};y.appendChild(b);});
+  c.appendChild(y);histEl.appendChild(c);
+ });
+ ITEMS.forEach(function(it,i){
+  var c=document.createElement("div");c.className="card";
+  c.innerHTML="<h2>문항 "+(i+1)+"</h2><p style='color:inherit;font-size:.95rem'>"+it.t+"</p>";
+  var s=document.createElement("div");s.className="scale";
+  for(var v=0;v<5;v++){(function(v){
+   var b=document.createElement("button");b.type="button";
+   b.innerHTML="<b>"+v+"</b><span>"+LABELS[v]+"</span>";
+   b.onclick=function(){ans[i]=v;paint();};
+   s.appendChild(b);})(v);}
+  c.appendChild(s);itemsEl.appendChild(c);
+ });
+}
+
+function paint(){
+ itemsEl.querySelectorAll(".scale").forEach(function(g,i){g.querySelectorAll("button").forEach(function(b,v){b.classList.toggle("on",ans[i]===v);});});
+ histEl.querySelectorAll(".yn").forEach(function(g,i){g.querySelectorAll("button").forEach(function(b,k){b.classList.toggle("on",hans[i]===(k===0?1:0));});});
+ var age=document.getElementById("age").value.trim();
+ var done=ans.filter(function(x){return x!==undefined;}).length+hans.filter(function(x){return x!==undefined;}).length+(age?1:0);
+ var p=Math.round(done/N*100);
+ document.getElementById("barfill").style.width=p+"%";
+ document.getElementById("ptxt").textContent=done+" / "+N+" 응답";
+ document.getElementById("pct").textContent=p+"%";
+ result(age);
+}
+
+function result(age){
+ var r=document.getElementById("result");
+ var n=ans.filter(function(x){return x!==undefined;}).length;
+ if(n<ITEMS.length){r.hidden=true;return;}
+ var dom=[0,0,0,0,0,0,0],t=0;
+ ITEMS.forEach(function(it,i){var v=it.r?4-ans[i]:ans[i];t+=v;dom[it.c]+=v;});
+ var hiDom=dom.filter(function(x){return x>=5;}).length;
+ var ch=hans.filter(function(x){return x===1;}).length;
+ var nm=document.getElementById("nm").value.trim();
+ document.getElementById("who").textContent=(nm?nm+"님의 ":"")+"검사 결과";
+ document.getElementById("total").textContent=t;
+ var cur=0;BANDS.forEach(function(b,i){if(t>=b.lo&&t<=b.hi)cur=i;});
+ var cols=["var(--ok)","var(--ac)","var(--warn)","var(--bad)"];
+ var lv=document.getElementById("lvl");lv.textContent="경향 수준: "+BANDS[cur].n.split(" ")[0];lv.style.color=cols[cur];
+ document.getElementById("desc").textContent=BANDS[cur].d;
+ var ex=[];
+ ex.push("7개 행동 영역 중 두드러진 영역: "+hiDom+"개 (영역별 8점 중 5점 이상 기준, DSM-5는 3개 이상을 요구)");
+ if(age){
+  var a=parseInt(age,10);
+  if(a<18)ex.push("만 18세 미만에게는 반사회성 성격장애를 진단하지 않습니다. 이 점수는 참고로만 보세요.");
+  else ex.push("만 "+a+"세: 진단 기준의 연령 요건(만 18세 이상)을 충족합니다.");
+ }else ex.push("나이를 입력하면 연령 요건도 함께 안내합니다.");
+ if(hans.filter(function(x){return x!==undefined;}).length===HIST.length)
+  ex.push("15세 이전 문제 행동: "+ch+"개 해당 (품행장애 진단은 15개 행동 중 3개 이상이며, 이 검사는 일부만 다룹니다)");
+ else ex.push("과거 행동 이력 문항에 모두 답하면 15세 이전 이력도 함께 표시합니다.");
+ document.getElementById("extra").innerHTML="";
+ ex.forEach(function(x){var li=document.createElement("li");li.textContent=x;document.getElementById("extra").appendChild(li);});
+ var bd=document.getElementById("bands");bd.innerHTML="";
+ BANDS.forEach(function(b,i){
+  var d=document.createElement("div");d.className="band"+(i===cur?" cur":"");
+  var h=document.createElement("b");h.textContent=b.n+(i===cur?" ← 현재":"");
+  var p=document.createElement("span");p.textContent=b.d;
+  d.appendChild(h);d.appendChild(p);bd.appendChild(d);
+ });
+ r.hidden=false;
+}
+
+document.getElementById("age").addEventListener("input",paint);
+document.getElementById("nm").addEventListener("input",paint);
+document.getElementById("reset").onclick=function(){
+ ans=[];hans=[];document.getElementById("age").value="";document.getElementById("nm").value="";
+ document.getElementById("result").hidden=true;build();paint();
+ window.scrollTo({top:0,behavior:"smooth"});
+};
+build();paint();
+</script>
+</body>
+</html>
